@@ -23,7 +23,7 @@ def entry():
 @app.route('/blogs', methods=['GET'])
 def downloadBlog():
     blogNum = request.args.get('blogNum')
-    blogsList = listdir(blogPath)
+    blogsList = list(filter(lambda fileName: fileName != '.keep', listdir(blogPath)))
     if blogNum is None:
         return 'INVALID'
     else:
