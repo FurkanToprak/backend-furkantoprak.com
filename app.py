@@ -1,10 +1,10 @@
 from flask import Flask, request, send_from_directory
-from os import listdir
+from os import listdir, remove
 from safety import isAllowed
 import json
 from dotenv import load_dotenv
 from os import getenv
-from os.path import join
+from os.path import join, exists
 from werkzeug.utils import secure_filename
 
 # Load environment
@@ -38,6 +38,10 @@ def downloadBlog():
 @app.route('/blogs', methods=['POST'])
 def uploadBlog():
     uuidArg = request.args.get('id')
+    toDelete = request.args.get('delete')
+    if toDelete and exists(toDelete):
+        remove(join(blogPath), toDelete)
+        return ''
     if uuidArg is None or uuidArg != uuid:
         return ''
     file = request.files['file']
