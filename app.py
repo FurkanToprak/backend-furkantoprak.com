@@ -30,7 +30,7 @@ def downloadBlog():
         return ', '.join(blogsList)
     elif blogNum >= len(blogsList):
         return 'INVALID'
-    return blogsList[blogNum]
+    return send_from_directory(blogPath, blogsList[blogNum])
 
 
 @app.route('/blogs', methods=['POST'])
