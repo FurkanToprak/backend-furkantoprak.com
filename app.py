@@ -24,7 +24,9 @@ def entry():
 def downloadBlog():
     blogNum = request.args.get('blogNum')
     blogsList = listdir(blogPath)
-    if blogNum is not None:
+    if blogNum is None:
+        return 'INVALID'
+    else:
         blogNum = int(blogNum)
     if blogNum == -1:
         return ', '.join(blogsList)
@@ -36,7 +38,7 @@ def downloadBlog():
 @app.route('/blogs', methods=['POST'])
 def uploadBlog():
     uuidArg = request.args.get('id')
-    if uuidArg != uuid:
+    if uuidArg is None or uuidArg != uuid:
         return ''
     file = request.files['file']
     if file == '':
